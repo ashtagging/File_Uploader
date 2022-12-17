@@ -1,0 +1,21 @@
+﻿@page "/"
+
+<div class="col-6">
+    <h1>File Upload in Blazor</h1>
+    <div class="form-group">
+        <InputFile OnChange="OnInputFileChange" multiple></InputFile>
+        <button class="btn btn-success btn-sm" type="button" @onclick="UploadFiles">
+            Upload
+        </button>
+    </div>
+</div>
+
+@code{
+    private void OnInputFileChange(){
+
+    }
+
+    private async Task UploadFiles(){
+
+    }
+}
