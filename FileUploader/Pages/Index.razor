@@ -28,8 +28,9 @@
 
     private async Task UploadFiles(){
         try{
-            if(selectedFiles is not null && selectedFiles.Count > 0){
-                foreach( var file in selectedFiles){
+            if(selectedFiles is not null && selectedFiles.Count > 0)
+            {
+                foreach(var file in selectedFiles){
                     await fileUpload.UploadFile(file);
                 }
                 if(selectedFiles.Count == 1){
@@ -42,6 +43,8 @@
         catch(Exception ex)
         {
             labelText = $"Upload failed due to {ex.Message}";
+            Console.WriteLine(ex.ToString());
+            Console.WriteLine(ex.Message);
         }
     }
 }

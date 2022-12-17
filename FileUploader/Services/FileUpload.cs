@@ -14,16 +14,16 @@ namespace FileUploader.Services
 
         public FileUpload(IWebHostEnvironment webHostEnvironment, ILogger<FileUpload> logger)
         {
-            logger = _logger;
-            webHostEnvironment = _webHostEnvironment;
+            _logger = logger;
+            _webHostEnvironment = webHostEnvironment;
         }
         public async Task UploadFile(IBrowserFile file)
         {
-            if(file != null)
+            if(file is not null)
             {
                 try
                 {
-                    var uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", file.Name);
+                    var uploadPath = Path.Combine(_webHostEnvironment.WebRootPath,"uploads", file.Name);
 
                     using(var stream = file.OpenReadStream())
                     {
@@ -35,6 +35,8 @@ namespace FileUploader.Services
                 catch(Exception e)
                 {
                     _logger.LogError(e.ToString());
+                    Console.WriteLine(e.ToString());
+                    Console.WriteLine(e.Message);
                 }
             }
         }
