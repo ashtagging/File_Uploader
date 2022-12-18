@@ -10,6 +10,14 @@
             Upload
         </button>
         <br/>
+        @{
+            var progressCss = "progress" + (displayProgress ? "" : "d-none");
+            var progressWidthStyle = progressPercent + "%";
+        }
+        <div class="@progressCss">
+            <div class="progress-bar" role="progressbar" style="width:@progressWidthStyle" area-valuenow="@progressPercent" area-minvalue="0" area-maxvalue="100"></div>
+        </div>
+        <br/>
     </div>
     <br />
     <label>@labelText</label>
@@ -17,6 +25,9 @@
 </div>
 
 @code{
+    private bool displayProgress;
+    private int progressPercent;
+
     IReadOnlyList<IBrowserFile> selectedFiles;
 
     private string labelText = "";
@@ -30,9 +41,15 @@
         try{
             if(selectedFiles is not null && selectedFiles.Count > 0)
             {
+                var uploaded = 0;
+                displayProgress = true;
+
                 foreach(var file in selectedFiles){
                     await fileUpload.UploadFile(file);
+                    uploaded++;
+                    progressPercent = (int)((uploaded / selectedFiles.Count) * 100);
                 }
+                //displayProgress = false;
                 if(selectedFiles.Count == 1){
                     labelText = $"Upload of file successful";
                 } else{
